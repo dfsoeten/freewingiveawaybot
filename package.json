@@ -1,0 +1,21 @@
+{
+  "name": "freewingiveawaybot",
+  "version": "1.0.0",
+  "description": "Discord Bot for the Free Win Giveaway discord channel",
+  "main": "bot.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamdann/freewingiveawaybot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamdann/freewingiveawaybot/issues"
+  },
+  "homepage": "https://github.com/iamdann/freewingiveawaybot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "overwatch-js": "^1.8.0",
+    "svg-builder": "^1.0.0"
+  }
+}
