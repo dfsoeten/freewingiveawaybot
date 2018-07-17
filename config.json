@@ -1,3 +1,4 @@
 {
-   "messageprefix": "$"
+   "messageprefix": "$",
+   "debug": false
 }

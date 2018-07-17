@@ -57,7 +57,7 @@ client.on('message', message => {
       //Get profile
       case config.messageprefix + 'get-profile':
         if(isValidUser(message.member.nickname))
-          response = 'Your profile: *https://playoverwatch.com/en-us/career/pc/' + message.member.nickname.replace('#', '-') + '*';
+          response = '**👤 Your profile: 👤** *https://playoverwatch.com/en-us/career/pc/' + message.member.nickname.replace('#', '-') + '*';
       break;
   }
 
@@ -71,8 +71,8 @@ function getRatings(){
     if(isValidUser(member.nickname)){
       //Get player data
       overwatch.getOverall('pc', 'eu', member.nickname.replace('#', '-'))
-            .then(data => ratings.set(data.profile.nick, data.profile.rank), console.log('\x1b[32m', member.nickname + '\'s profile found!', '\x1b[0m'))
-            .catch(err => console.log('\x1b[31m', member.nickname + '\'s profile not found', '\x1b[0m'));
+            .then(data => ratings.set(data.profile.nick, data.profile.rank), config.debug && console.log('\x1b[32m', member.nickname + '\'s profile found!', '\x1b[0m'))
+            .catch(err => config.debug && console.log('\x1b[31m', member.nickname + '\'s profile not found', '\x1b[0m'));
     }
   })
 }
