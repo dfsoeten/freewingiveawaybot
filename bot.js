@@ -8,6 +8,9 @@ const overwatch = require('overwatch-js');
 //Get Auth Key
 const auth = require('./auth.json');
 
+//Get Bot Settings
+const config = require('./config.json');
+
 //Define Sorted Ratings
 const ratings = new Map();
 ratings[Symbol.iterator] = function* () {
@@ -23,38 +26,34 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+  var response;
+
   //Send Message
   switch (message.content) {
-      case '!help':
-        var response = '__** <-- It\'s Commands:**__ \n';
-        response += '!help - Shows this message \n';
-        response += '!leaderboards - Shows the current leaderboard \n';
-        response += '!update-leaderboards - Refreshes the leaderboard \n';
-
-        //Send Reply
-        message.channel.send(response);
+      case config.messageprefix + 'help':
+        response = '__**🔥 The Commands: 🔥**__ \n';
+        response += config.messageprefix + 'help - Shows this message \n';
+        response += config.messageprefix + 'leaderboards - Updates, then shows the current leaderboard \n';
+        response += config.messageprefix + 'update-leaderboards - Updates the leaderboard manually \n';
       break;
-      case '!leaderboards':
+      case config.messageprefix + 'leaderboards':
         getRatings();
 
         var rank = 1;
-        var response = '__**Leaderboard:**__ \n';
+        response = '__**🏆 Leaderboard: 🏆**__ \n';
 
         for(let [player, sr] of ratings){
           response += '*#' + rank++ + '*   ' + player + '   ' + sr + 'SR \n';
         }
-
-        //Send Reply
-        message.channel.send(response);
       break;
-      case '!update-leaderboards':
+      case config.messageprefix + 'update-leaderboards':
         getRatings();
-        var response = 'Leaderboard updated!';
-
-        //Send Reply
-        message.channel.send(response);
+        response = '*🔄 Leaderboard updated! 🔄*';
       break;
   }
+
+  if(response)
+    message.channel.send(response);
 });
 
 //Foreach valid member get their SR
@@ -63,7 +62,7 @@ function getRatings(){
     if(member.nickname && /(.{1,12}#[0-9]{1,10})\w+/g.test(member.nickname)){
       //Get player data
       overwatch.getOverall('pc', 'eu', member.nickname.replace('#', '-'))
-            .then(data => ratings.set(data.profile.nick, data.profile.rank), console.log('\x1b[32m', member.nickname + '\'s profile found!', '\x1b[0m')) //console.log(data.profile.nick)
+            .then(data => ratings.set(data.profile.nick, data.profile.rank), console.log('\x1b[32m', member.nickname + '\'s profile found!', '\x1b[0m'))
             .catch(err => console.log('\x1b[31m', member.nickname + '\'s profile not found', '\x1b[0m'));
     }
   })
