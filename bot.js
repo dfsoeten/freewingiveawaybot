@@ -23,32 +23,37 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  //Show The Leaderboard
-  if(message.content === '!leaderboards'){
-    var rank = 1;
-    var result = '__**Leaderboard:**__ \n';
+  //Send Message
+  switch (message.content) {
+      case '!help':
+        var response = '__** <-- It\'s Commands:**__ \n';
+        response += '!help - Shows this message \n';
+        response += '!leaderboards - Shows the current leaderboard \n';
+        response += '!update-leaderboards - Refreshes the leaderboard \n';
 
-    for(let [player, sr] of ratings){
-      result += '*#' + rank++ + '*   ' + player + '   ' + sr + 'SR \n';
-    }
+        //Send Reply
+        message.channel.send(response);
+      break;
+      case '!leaderboards':
+        getRatings();
 
-    message.channel.send(result);
-  }
+        var rank = 1;
+        var response = '__**Leaderboard:**__ \n';
 
-  //Update Leaderboards
-  if(message.content === '!update-leaderboards'){
-    getRatings();
-    message.channel.send('Leaderboard updated!');
-  }
+        for(let [player, sr] of ratings){
+          response += '*#' + rank++ + '*   ' + player + '   ' + sr + 'SR \n';
+        }
 
-  //Help
-  if(message.content === '!help'){
-    var result = '__** <-- It\'s Commands:**__ \n';
-    result += '!help - Shows this message \n';
-    result += '!leaderboards - Shows the current leaderboard \n';
-    result += '!update-leaderboards - Refreshes the leaderboard \n';
+        //Send Reply
+        message.channel.send(response);
+      break;
+      case '!update-leaderboards':
+        getRatings();
+        var response = 'Leaderboard updated!';
 
-    message.channel.send(result);
+        //Send Reply
+        message.channel.send(response);
+      break;
   }
 });
 
