@@ -75,7 +75,11 @@ client.on('message', message => {
     if(config.output)
       console.log(response);
   }
+});
 
+//Try to catch the error
+client.on('error', error => {
+  config.debug && console.log('\x1b[31m', 'Lost connection!', '\x1b[0m')
 });
 
 //Foreach valid member get their SR
