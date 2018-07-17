@@ -17,6 +17,9 @@ ratings[Symbol.iterator] = function* () {
     yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
 }
 
+//Order66
+const starwars = require('starwars');
+
 //Initialize Client & Get Leaderboard
 client.on('ready', () => {
   //Display Welcome Message
@@ -31,15 +34,16 @@ client.on('message', message => {
   //Send Message
   switch (message.content){
       //Help
-      case config.messageprefix + 'help':
+      case config.commandprefix + 'help':
         response = '__**🔥 The Commands: 🔥**__ \n';
-        response += config.messageprefix + 'help - Shows this message \n';
-        response += config.messageprefix + 'leaderboards - Updates, then shows the current leaderboard \n';
-        response += config.messageprefix + 'update-leaderboards - Updates the leaderboard manually \n';
-        response += config.messageprefix + 'get-profile - Gets your playoverwatch profile \n';
+        response += config.commandprefix + 'help - Shows this message \n';
+        response += config.commandprefix + 'leaderboards - Updates, then shows the current leaderboard \n';
+        response += config.commandprefix + 'update-leaderboards - Updates the leaderboard manually \n';
+        response += config.commandprefix + 'get-profile - Gets your playoverwatch profile \n';
+        response += config.commandprefix + 'executeorder66 - Gets a random starwars quoute 🤷🏻‍ \n';
       break;
       //Show Leaderboard
-      case config.messageprefix + 'leaderboards':
+      case config.commandprefix + 'leaderboards':
         getRatings();
 
         var rank = 1;
@@ -50,19 +54,28 @@ client.on('message', message => {
         }
       break;
       //Update Leaderboards
-      case config.messageprefix + 'update-leaderboards':
+      case config.commandprefix + 'update-leaderboards':
         getRatings();
         response = '*🔄 Leaderboard updated! 🔄*';
       break;
       //Get profile
-      case config.messageprefix + 'get-profile':
+      case config.commandprefix + 'get-profile':
         if(isValidUser(message.member.nickname))
           response = '**👤 Your profile: 👤** *https://playoverwatch.com/en-us/career/pc/' + message.member.nickname.replace('#', '-') + '*';
       break;
+      //Order66
+      case config.commandprefix + 'executeorder66':
+        response = '⭐️ *' + starwars() + '* ⭐️';
+      break;
   }
 
-  if(response)
+  if(response){
     message.channel.send(response);
+
+    if(config.output)
+      console.log(response);
+  }
+
 });
 
 //Foreach valid member get their SR
