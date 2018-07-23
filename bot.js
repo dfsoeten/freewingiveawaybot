@@ -24,6 +24,8 @@ const starwars = require('starwars');
 client.on('ready', () => {
   //Display Welcome Message
   console.log(`Bot initialized as ${client.user.tag}!`);
+  //Set Activity
+  client.user.setActivity(`Try ${config.commandprefix}help`)
 
   getRatings();
 });
@@ -34,16 +36,16 @@ client.on('message', message => {
   //Send Message
   switch (message.content){
       //Help
-      case config.commandprefix + 'help':
+      case `${config.commandprefix}help`:
         response = '__**🔥 The Commands: 🔥**__ \n';
-        response += config.commandprefix + 'help - Shows this message \n';
-        response += config.commandprefix + 'leaderboards - Updates, then shows the current leaderboard \n';
-        response += config.commandprefix + 'update-leaderboards - Updates the leaderboard manually \n';
-        response += config.commandprefix + 'get-profile - Gets your playoverwatch profile \n';
-        response += config.commandprefix + 'executeorder66 - Gets a random starwars quoute 🤷🏻‍ \n';
+        response += `${config.commandprefix}help - Shows this message \n`;
+        response += `${config.commandprefix}leaderboards - Updates, then shows the current leaderboard \n`;
+        response += `${config.commandprefix}update-leaderboards - Updates the leaderboard manually \n`;
+        response += `${config.commandprefix}get-profile - Gets your playoverwatch profile \n`;
+        response += `${config.commandprefix}executeorder66 - Gets a random starwars quoute 🤷🏻‍ \n`;
       break;
       //Show Leaderboard
-      case config.commandprefix + 'leaderboards':
+      case `${config.commandprefix}leaderboards`:
         getRatings();
 
         var rank = 1;
@@ -54,21 +56,22 @@ client.on('message', message => {
         }
       break;
       //Update Leaderboards
-      case config.commandprefix + 'update-leaderboards':
+      case `${config.commandprefix}update-leaderboards`:
         getRatings();
         response = '*🔄 Leaderboard updated! 🔄*';
       break;
       //Get profile
-      case config.commandprefix + 'get-profile':
+      case `${config.commandprefix}get-profile`:
         if(isValidUser(message.member.nickname))
           response = '**👤 Your profile: 👤** *https://playoverwatch.com/en-us/career/pc/' + message.member.nickname.replace('#', '-') + '*';
       break;
       //Order66
-      case config.commandprefix + 'executeorder66':
+      case `${config.commandprefix}executeorder66`:
         response = '⭐️ *' + starwars() + '* ⭐️';
       break;
   }
 
+  //Send Response
   if(response){
     message.channel.send(response);
 

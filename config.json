@@ -1,5 +1,5 @@
 {
-   "commandprefix": "$",
+   "commandprefix": "?",
    "debug": true,
    "output": false
 }
