@@ -80,6 +80,13 @@ client.on('message', message => {
   }
 });
 
+//Send welcome message
+client.on('guildMemberAdd', (member) => {
+  //console.log(`${member.user.username}#${member.user.discriminator}`);
+
+  client.channels.get("467356820843790349").send(`<@${member.user.id}> ༼ つ ◕ ◕ ༽つ READ RULES ༼ つ ◕ ◕ ༽つ`);
+});
+
 //Try to catch the error
 client.on('error', error => {
   config.debug && console.log('\x1b[31m', 'Lost connection!', '\x1b[0m')
@@ -91,8 +98,8 @@ function getRatings(){
     if(isValidUser(member.nickname)){
       //Get player data
       overwatch.getOverall('pc', 'eu', member.nickname.replace('#', '-'))
-            .then(data => ratings.set(data.profile.nick, data.profile.rank), config.debug && console.log('\x1b[32m', member.nickname + '\'s profile found!', '\x1b[0m'))
-            .catch(err => config.debug && console.log('\x1b[31m', member.nickname + '\'s profile not found', '\x1b[0m'));
+            .then(data => ratings.set(data.profile.nick, data.profile.rank), config.debug && console.log('\x1b[32m', `${member.nickname}'s profile found!`, '\x1b[0m'))
+            .catch(err => config.debug && console.log('\x1b[31m', `${member.nickname}'s profile not found`, '\x1b[0m'));
     }
   })
 }
