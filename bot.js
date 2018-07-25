@@ -22,10 +22,15 @@ const starwars = require('starwars');
 
 //Initialize Client & Get Leaderboard
 client.on('ready', () => {
+  guild = client.guilds.get('467356820843790347');
+
   //Display Welcome Message
   console.log(`Bot initialized as ${client.user.tag}!`);
   //Set Activity
   client.user.setActivity(`Try ${config.commandprefix}help`)
+
+  //console.log(client.guilds.get('467356820843790347').roles);
+  //console.log(client.channels);
 
   getRatings();
 });
@@ -82,9 +87,13 @@ client.on('message', message => {
 
 //Send welcome message
 client.on('guildMemberAdd', (member) => {
-  //console.log(`${member.user.username}#${member.user.discriminator}`);
+  //Read the rules new user!
+  client.channels.get('471714196955070465').send(`<@${member.user.id}> ༼ つ ◕ ◕ ༽つ READ RULES ༼ つ ◕ ◕ ༽つ`)
+    .catch(config.debug && console.error);
 
-  client.channels.get("467356820843790349").send(`<@${member.user.id}> ༼ つ ◕ ◕ ༽つ READ RULES ༼ つ ◕ ◕ ༽つ`);
+  //Assign new free win helper role
+  member.addRole('467357794870231043')
+    .catch(config.debug && console.error);
 });
 
 //Try to catch the error
