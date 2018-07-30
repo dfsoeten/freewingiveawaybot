@@ -27,10 +27,7 @@ client.on('ready', () => {
   //Display Welcome Message
   console.log(`Bot initialized as ${client.user.tag}!`);
   //Set Activity
-  client.user.setActivity(`Try ${config.commandprefix}help`)
-
-  //console.log(client.guilds.get('467356820843790347').roles);
-  //console.log(client.channels);
+  client.user.setActivity(`Try ${config.commandprefix}help`);
 
   getRatings();
 });
