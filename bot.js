@@ -104,7 +104,12 @@ function getRatings(){
     if(isValidUser(member.nickname)){
       //Get player data
       overwatch.getOverall('pc', 'eu', member.nickname.replace('#', '-'))
-            .then(data => ratings.set(data.profile.nick, data.profile.rank), config.debug && console.log('\x1b[32m', `${member.nickname}'s profile found!`, '\x1b[0m'))
+            .then((data) => {
+              if(!isNaN(data.profile.rank)){
+                ratings.set(data.profile.nick, data.profile.rank)
+                config.debug && console.log('\x1b[32m', `${member.nickname}'s profile found`, '\x1b[0m')
+              }
+            })
             .catch(err => config.debug && console.log('\x1b[31m', `${member.nickname}'s profile not found`, '\x1b[0m'));
     }
   })
