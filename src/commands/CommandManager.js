@@ -1,4 +1,8 @@
-const HelpCommand = require('./HelpCommand');
+const HelpCommand = require('./HelpCommand'),
+      LeaderboardsCommand = require('./LeaderboardsCommand'),
+      StarwarsCommand = require('./StarwarsCommand'),
+      GetprofileCommand = require('./GetprofileCommand'),
+      Updateleaderboards = require('./UpdateleaderboardsCommand');
 
 class CommandManager{
 
@@ -8,8 +12,13 @@ class CommandManager{
      */
     constructor(client){
         this.commands = {
-            'help': new HelpCommand(client, this.commands)
-        }
+            'leaderboards': new LeaderboardsCommand(client),
+            'starwars': new StarwarsCommand(client),
+            'getprofile': new GetprofileCommand(client),
+            'updateleaderboards': new Updateleaderboards(client)
+        };
+
+        this.commands['help'] = new HelpCommand(client, this.commands)
     }
 
     /**

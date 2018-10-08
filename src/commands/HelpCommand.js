@@ -21,7 +21,7 @@ class HelpCommand extends BaseCommand{
             .setTitle(this.name)
             .setDescription(this.description);
         for(let command in commands)
-            this.embed.addField(command.name, command.description)
+            this.embed.addField(commands[command].name, commands[command].description)
     }
 
     /**
