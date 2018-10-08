@@ -1,3 +1,5 @@
+const Message = require('./src/Message');
+
 //Setup Discord
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -15,7 +17,7 @@ const config = require('./config.json');
 const ratings = new Map();
 ratings[Symbol.iterator] = function* () {
     yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
-}
+};
 
 //Order66
 const starwars = require('starwars');
@@ -29,57 +31,61 @@ client.on('ready', () => {
   //Set Activity
   client.user.setActivity(`Try ${config.commandprefix}help`);
 
-  getRatings();
+  //getRatings();
 });
 
 client.on('message', message => {
-  var response;
+    (new Message(message, client)).send()
 
-  //Send Message
-  switch (message.content){
-      //Help
-      case `${config.commandprefix}help`:
-        response = '__**🔥 The Commands: 🔥**__ \n';
-        response += `${config.commandprefix}help - Shows this message \n`;
-        response += `${config.commandprefix}leaderboards - Updates, then shows the current leaderboard \n`;
-        response += `${config.commandprefix}update-leaderboards - Updates the leaderboard manually \n`;
-        response += `${config.commandprefix}get-profile - Gets your playoverwatch profile \n`;
-        response += `${config.commandprefix}executeorder66 - Gets a random starwars quoute 🤷🏻‍ \n`;
-      break;
-      //Show Leaderboard
-      case `${config.commandprefix}leaderboards`:
-        getRatings();
 
-        var rank = 1;
-        response = '__**🏆 Leaderboard: 🏆**__ \n';
 
-        for(let [player, sr] of ratings){
-          response += '*#' + rank++ + '*   ' + player + '   ' + sr + 'SR \n';
-        }
-      break;
-      //Update Leaderboards
-      case `${config.commandprefix}update-leaderboards`:
-        getRatings();
-        response = '*🔄 Leaderboard updated! 🔄*';
-      break;
-      //Get profile
-      case `${config.commandprefix}get-profile`:
-        if(isValidUser(message.member.nickname))
-          response = '**👤 Your profile: 👤** *https://playoverwatch.com/en-us/career/pc/' + message.member.nickname.replace('#', '-') + '*';
-      break;
-      //Order66
-      case `${config.commandprefix}executeorder66`:
-        response = '⭐️ *' + starwars() + '* ⭐️';
-      break;
-  }
-
-  //Send Response
-  if(response){
-    message.channel.send(response);
-
-    if(config.output)
-      console.log(response);
-  }
+  // var response;
+  //
+  // //Send Message
+  // switch (message.content){
+  //     //Help
+  //     case `${config.commandprefix}help`:
+  //       response = '__**🔥 The Commands: 🔥**__ \n';
+  //       response += `${config.commandprefix}help - Shows this message \n`;
+  //       response += `${config.commandprefix}leaderboards - Updates, then shows the current leaderboard \n`;
+  //       response += `${config.commandprefix}update-leaderboards - Updates the leaderboard manually \n`;
+  //       response += `${config.commandprefix}get-profile - Gets your playoverwatch profile \n`;
+  //       response += `${config.commandprefix}executeorder66 - Gets a random starwars quoute 🤷🏻‍ \n`;
+  //     break;
+  //     //Show Leaderboard
+  //     case `${config.commandprefix}leaderboards`:
+  //       getRatings();
+  //
+  //       var rank = 1;
+  //       response = '__**🏆 Leaderboard: 🏆**__ \n';
+  //
+  //       for(let [player, sr] of ratings){
+  //         response += '*#' + rank++ + '*   ' + player + '   ' + sr + 'SR \n';
+  //       }
+  //     break;
+  //     //Update Leaderboards
+  //     case `${config.commandprefix}update-leaderboards`:
+  //       getRatings();
+  //       response = '*🔄 Leaderboard updated! 🔄*';
+  //     break;
+  //     //Get profile
+  //     case `${config.commandprefix}get-profile`:
+  //       if(isValidUser(message.member.nickname))
+  //         response = '**👤 Your profile: 👤** *https://playoverwatch.com/en-us/career/pc/' + message.member.nickname.replace('#', '-') + '*';
+  //     break;
+  //     //Order66
+  //     case `${config.commandprefix}executeorder66`:
+  //       response = '⭐️ *' + starwars() + '* ⭐️';
+  //     break;
+  // }
+  //
+  // //Send Response
+  // if(response){
+  //   message.channel.send(response);
+  //
+  //   if(config.output)
+  //     console.log(response);
+  // }
 });
 
 //Send welcome message
@@ -106,8 +112,8 @@ function getRatings(){
       overwatch.getOverall('pc', 'eu', member.nickname.replace('#', '-'))
             .then((data) => {
               if(!isNaN(data.profile.rank)){
-                ratings.set(data.profile.nick, data.profile.rank)
-                config.debug && console.log('\x1b[32m', `${member.nickname}'s profile found`, '\x1b[0m')
+                ratings.set(data.profile.nick, data.profile.rank);
+                config.debug && console.log('\x1b[32m', `${member.nickname}'s profile found`, '\x1b[0m');
               }
             })
             .catch(err => config.debug && console.log('\x1b[31m', `${member.nickname}'s profile not found`, '\x1b[0m'));

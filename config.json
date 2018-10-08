@@ -1,5 +1,8 @@
 {
    "commandprefix": "?",
-   "debug": true,
-   "output": false
+   "debug": false,
+   "output": false,
+   "embed": {
+      "color": "0xf44242"
+   }
 }
