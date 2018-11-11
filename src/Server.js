@@ -1,8 +1,7 @@
-const User = require('./User'),
-      config = require('../config.json'),
-      Overwatch = require('overwatch-js');
+const Member = require('./Member'),
+      config = require('../config.json');
 
-class Server{
+class Server {
 
     /**
      * Initializes User objects & pulls data from API
@@ -10,11 +9,21 @@ class Server{
      * @param client
      */
     constructor(client){
-        //Set Acitivity
-        client.user.setActivity(`Try ${config.commandprefix}help`);
+        //Define users dictionary
+        this.client = client;
+        this.users = {};
 
-        //Create users array
-        const users = [];
+        //Initialize users dictionary
+        for(let member of this.client.guilds.get('467356820843790347').members.array()){
+            this.users[member] = new Member(member);
+        }
+
+
+        // this.client.guilds.get('467356820843790347').members.forEach(function(member){
+        //     //console.log(member.user.id);
+        //     this.memes[member.user.id] = new User(member)
+        //     //this.users.push(new User(member.nickname));
+        // });
 
 
 
@@ -23,26 +32,16 @@ class Server{
         // ratings[Symbol.iterator] = function* () {
         //     yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
         // };
+    }
 
-        client.guilds.get('467356820843790347').members.forEach(function(member){
-            let user = new User(member.nickname);
 
-            if(user.hasBattletag()){
-                console.log(user.getUrlName());
-                //Get user overwatch data from API
-                Overwatch.getOverall('pc', 'eu', user.getUrlName())
-                    .then((data) => {
-                        if (!isNaN(data.profile.rank)) {
-                            user.setRank(data.profile.rank);
-                            !config.silent && console.log('\x1b[32m', `${member.nickname}'s profile found`, '\x1b[0m');
-                        }
-                    })
-                    .catch(e => config.debug && console.log('\x1b[31m', `${member.nickname}'s profile not found`, '\x1b[0m'));
+    hasUser(name){
+        return name in this.users;
+    }
 
-                //Save user
-                users.push(user);
-            }
-        });
+    findUser(name){
+        if(this.hasUser(name))
+            return this.users[name];
     }
 }
 

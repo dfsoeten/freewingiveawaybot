@@ -9,11 +9,12 @@ class Message{
      * @param message
      * @param client
      */
-    constructor(message, client){
+    constructor(message, client, server){
         this.message = message;
         this.client = client;
+        this.server = server;
         this.text = message.content.substring(1);
-        this.response = (new CommandManager(this.client)).execute(this.text)
+        this.response = (new CommandManager(this.client, this.server)).execute(this.text)
     }
 
     /**

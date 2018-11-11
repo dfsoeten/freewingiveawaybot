@@ -5,21 +5,27 @@ const Discord = require('discord.js'),
       Message = require('./src/Message'),
       Server = require('./src/Server'),
       //Include auth token
-      auth = require('./auth.json');
+      auth = require('./auth.json'),
+      config = require('./config.json');
+
+let   server = null;
+
 
 //Initialize Client
 client.on('ready', () => {
   //Display Welcome Message
   console.log(`Bot initialized as ${client.user.tag}!`);
 
-  const server = new Server(client);
+  //Set Acitivity
+  client.user.setActivity(`Try ${config.commandprefix}help`);
+
+  //Initialize Server
+  server = new Server(client);
 });
 
 //Handle Messages
 client.on('message', message => {
-    (new Message(message, client)).send()
-
-    console.log(this.users);
+    (new Message(message, client, server)).send();
 });
 
 //Handle new members

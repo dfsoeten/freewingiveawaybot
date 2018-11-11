@@ -9,13 +9,14 @@ class CommandManager{
     /**
      * Registers all available commands
      * @param client
+     * @param server
      */
-    constructor(client){
+    constructor(client, server){
         this.commands = {
-            'leaderboards': new LeaderboardsCommand(client),
+            //'leaderboards': new LeaderboardsCommand(client),
             'starwars': new StarwarsCommand(client),
-            'getprofile': new GetprofileCommand(client),
-            'updateleaderboards': new Updateleaderboards(client)
+            'getprofile': new GetprofileCommand(client, server),
+            //'updateleaderboards': new Updateleaderboards(client)
         };
 
         this.commands['help'] = new HelpCommand(client, this.commands)

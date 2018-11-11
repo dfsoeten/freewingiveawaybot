@@ -14,8 +14,12 @@
   },
   "homepage": "https://github.com/iamdann/freewingiveawaybot#readme",
   "dependencies": {
+    "async": "^2.6.1",
+    "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.3.2",
-    "overwatch-js": "^1.8.0",
+    "puppeteer": "^1.10.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "starwars": "^1.0.0",
     "svg-builder": "^1.0.0"
   }
