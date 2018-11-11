@@ -1,7 +1,7 @@
 const config = require('../config.json'),
       Playoverwatch = require('./Playoverwatch');
 
-class Member {
+class Member{
 
     /**
      * Member

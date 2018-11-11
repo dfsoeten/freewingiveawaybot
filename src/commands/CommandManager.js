@@ -1,4 +1,5 @@
-const HelpCommand = require('./HelpCommand'),
+const config = require('../../config.json'),
+      HelpCommand = require('./HelpCommand'),
       LeaderboardsCommand = require('./LeaderboardsCommand'),
       StarwarsCommand = require('./StarwarsCommand'),
       GetprofileCommand = require('./GetprofileCommand'),
@@ -12,14 +13,13 @@ class CommandManager{
      * @param server
      */
     constructor(client, server){
-        this.commands = {
-            //'leaderboards': new LeaderboardsCommand(client),
-            'starwars': new StarwarsCommand(client),
-            'getprofile': new GetprofileCommand(client, server),
-            //'updateleaderboards': new Updateleaderboards(client)
-        };
+        this.commands = {};
 
-        this.commands['help'] = new HelpCommand(client, this.commands)
+        this.commands[`${config.commandprefix}leaderboards`] = new LeaderboardsCommand(client);
+        this.commands[`${config.commandprefix}starwars`] = new StarwarsCommand(client);
+        this.commands[`${config.commandprefix}getprofile`] = new GetprofileCommand(client, server);
+        this.commands[`${config.commandprefix}updateleaderboards`] = new Updateleaderboards(client);
+        this.commands[`${config.commandprefix}help`] = new HelpCommand(client, this.commands)
     }
 
     /**
@@ -30,7 +30,7 @@ class CommandManager{
      */
     execute(text){
         if(text in this.commands)
-            return this.commands[text].getOutput()
+            return this.commands[text].getOutput();
     }
 }
 

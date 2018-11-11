@@ -1,7 +1,7 @@
 const Member = require('./Member'),
       config = require('../config.json');
 
-class Server {
+class Server{
 
     /**
      * Initializes User objects & pulls data from API
@@ -15,9 +15,8 @@ class Server {
 
         //Initialize users dictionary
         for(let member of this.client.guilds.get('467356820843790347').members.array()){
-            this.users[member] = new Member(member);
+            this.users[member.nickname] = new Member(member);
         }
-
 
         // this.client.guilds.get('467356820843790347').members.forEach(function(member){
         //     //console.log(member.user.id);
@@ -34,7 +33,6 @@ class Server {
         // };
     }
 
-
     hasUser(name){
         return name in this.users;
     }
@@ -42,6 +40,13 @@ class Server {
     findUser(name){
         if(this.hasUser(name))
             return this.users[name];
+    }
+
+    getUsers(sorted){
+        if(sorted)
+            return this.users.sort((a, b) => a.rank.localeCompare(b.rank));
+        else
+            return this.users;
     }
 }
 

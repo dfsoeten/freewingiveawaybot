@@ -8,13 +8,16 @@ class Message{
      *
      * @param message
      * @param client
+     * @param server
      */
     constructor(message, client, server){
         this.message = message;
         this.client = client;
         this.server = server;
-        this.text = message.content.substring(1);
-        this.response = (new CommandManager(this.client, this.server)).execute(this.text)
+        this.text = message.content;
+        this.response = (new CommandManager(this.client, this.server)).execute(this.text);
+
+        //console.log(JSON.stringify(server.getUsers(false), null, 2));
     }
 
     /**
@@ -22,7 +25,7 @@ class Message{
      */
     send(){
         if(this.response)
-            this.message.channel.send(this.response)
+            this.message.channel.send(this.response);
     }
 }
 
