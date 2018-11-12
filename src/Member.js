@@ -11,7 +11,6 @@ class Member{
     constructor(member){
         this.id = member.user.id;
         this.name = member.nickname;
-        this.battletag = (this.name && /(.{1,12}#[0-9]{1,10})\w+/g.test(this.name)) ? this.name : null;
     }
 
     /**
@@ -37,7 +36,7 @@ class Member{
      * @returns {*|boolean}
      */
     hasBattletag(){
-        return !!(this.battletag);
+        return !!(this.name && /(.{1,12}#[0-9]{1,10})\w+/g.test(this.name));
     }
 
     /**

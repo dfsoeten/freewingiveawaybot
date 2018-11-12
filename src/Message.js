@@ -16,8 +16,6 @@ class Message{
         this.server = server;
         this.text = message.content;
         this.response = (new CommandManager(this.client, this.server)).execute(this.text);
-
-        console.log(this.server.getMembers());
     }
 
     /**

@@ -16,7 +16,9 @@ class Server{
 
         for(let member of this.client.guilds.get('467356820843790347').members.array()){
             let m = new Member(member);
-            m.initializeRank().then((r) => { if(r){ this.members[member.nickname] = m; config.silent || console.log(`Found rank(${r}) for ${m.getName()}`)} });
+
+            if(m.hasBattletag())
+                m.initializeRank().then((r) => { if(r){ this.members[member.nickname] = m; config.silent || console.log(`Found rank(${r}) for ${m.getName()}`)} });
         }
     }
 

@@ -20,6 +20,10 @@ class BaseCommand{
             .setFooter('I\'m made by DanIV#8981');
     }
 
+    getOutput(){
+        return this.embed;
+    }
+
 }
 
 module.exports = BaseCommand;
