@@ -7,6 +7,7 @@ class Member{
      * Member
      *
      * @param member
+     * @param id
      */
     constructor(member){
         this.id = member.user.id;

@@ -9,9 +9,9 @@ class LeaderboardsCommand extends BaseCommand{
 
         // Set command name & description
         this.name = 'Leaderboards';
-        this.description = 'Current leaderboard:';
+        this.description = 'Shows a leaderboard with the lowest ranking users on this server';
 
-        //Check if leaderboard is empty
+        // Set embed properties
         if(Object.keys(server.getMembers()).length === 0)
             this.embed
                 .setTitle(`I'm empty :(`)
@@ -19,7 +19,7 @@ class LeaderboardsCommand extends BaseCommand{
         else
             this.embed
                 .setTitle(this.name)
-                .setDescription(this.description);
+                .setDescription('Current leaderboard:');
 
         //Display server leaderboards
         Object.values(server.getMembers()).forEach((member, i = 0) => {

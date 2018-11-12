@@ -11,4 +11,3 @@
     }
     ```
 3. Run `node bot.js`
-4. Enjoy :)

@@ -1,16 +1,23 @@
-const BaseCommand = require('./BaseCommand');
+const BaseCommand = require('./BaseCommand'),
+      config = require('../../config');
 
 class UpdateleaderboardsCommand extends BaseCommand{
 
     /**
      * Setup command
      */
-    constructor(client){
+    constructor(client, server){
         super(client);
 
         // Set command name & description
         this.name = 'Updateleaderboards';
         this.description = 'Manually updates the leaderboards';
+
+        this.embed
+            .setTitle('Leaderboards updated!')
+            .setDescription('Leaderboards are updated, please give it a few minutes to fully refresh :)');
+
+        this.server = server;
     }
 
     /**
@@ -19,9 +26,10 @@ class UpdateleaderboardsCommand extends BaseCommand{
      * @returns {string}
      */
     getOutput(){
-        //@todo: update leaderboards here
+        config.silent || console.log('-- Refresh Initiated --');
+        this.server.initializeMembers();
 
-        return '*🔄 Leaderboard updated! 🔄*';
+        return this.embed;
     }
 }
 

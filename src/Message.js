@@ -15,7 +15,7 @@ class Message{
         this.client = client;
         this.server = server;
         this.text = message.content;
-        this.response = (new CommandManager(this.client, this.server)).execute(this.text);
+        this.response = (new CommandManager(this.message, this.client, this.server)).execute(this.text);
     }
 
     /**

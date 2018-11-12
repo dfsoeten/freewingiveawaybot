@@ -14,6 +14,15 @@ class Server{
         this.client = client;
         this.members = {};
 
+        this.initializeMembers();
+    }
+
+    /**
+     * Initializes members in the server
+     */
+    initializeMembers(){
+        this.members = {};
+
         for(let member of this.client.guilds.get('467356820843790347').members.array()){
             let m = new Member(member);
 

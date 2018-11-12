@@ -9,16 +9,17 @@ class CommandManager{
 
     /**
      * Registers all available commands
+     * @param message
      * @param client
      * @param server
      */
-    constructor(client, server){
+    constructor(message, client, server){
         this.commands = {};
 
         this.commands[`${config.commandprefix}leaderboards`] = new LeaderboardsCommand(client, server);
         this.commands[`${config.commandprefix}starwars`] = new StarwarsCommand(client);
-        this.commands[`${config.commandprefix}getprofile`] = new GetprofileCommand(client, server);
-        this.commands[`${config.commandprefix}updateleaderboards`] = new Updateleaderboards(client);
+        this.commands[`${config.commandprefix}getprofile`] = new GetprofileCommand(client, message);
+        this.commands[`${config.commandprefix}updateleaderboards`] = new Updateleaderboards(client, server);
         this.commands[`${config.commandprefix}help`] = new HelpCommand(client, this.commands)
     }
 
