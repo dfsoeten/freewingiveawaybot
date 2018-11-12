@@ -1,5 +1,6 @@
 const Member = require('./Member'),
-      config = require('../config.json');
+      config = require('../config.json'),
+      sort = require('deep-sort');
 
 class Server{
 
@@ -9,44 +10,44 @@ class Server{
      * @param client
      */
     constructor(client){
-        //Define users dictionary
+        //Define members dictionary
         this.client = client;
-        this.users = {};
+        this.members = {};
 
-        //Initialize users dictionary
         for(let member of this.client.guilds.get('467356820843790347').members.array()){
-            this.users[member.nickname] = new Member(member);
+            let m = new Member(member);
+            m.initializeRank().then((r) => { if(r){ this.members[member.nickname] = m; config.silent || console.log(`Found rank(${r}) for ${m.getName()}`)} });
         }
-
-        // this.client.guilds.get('467356820843790347').members.forEach(function(member){
-        //     //console.log(member.user.id);
-        //     this.memes[member.user.id] = new User(member)
-        //     //this.users.push(new User(member.nickname));
-        // });
-
-
-
-        //Define Sorted Ratings
-        // const ratings = new Map();
-        // ratings[Symbol.iterator] = function* () {
-        //     yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
-        // };
     }
 
-    hasUser(name){
-        return name in this.users;
+    /**
+     * Checks if the server has a member
+     *
+     * @param name
+     * @returns {boolean}
+     */
+    hasMember(name){
+        return name in this.members;
     }
 
-    findUser(name){
-        if(this.hasUser(name))
-            return this.users[name];
+    /**
+     * Finds member
+     *
+     * @param name
+     * @returns {*}
+     */
+    findMember(name){
+        if(this.hasMember(name))
+            return this.members[name];
     }
 
-    getUsers(sorted){
-        if(sorted)
-            return this.users.sort((a, b) => a.rank.localeCompare(b.rank));
-        else
-            return this.users;
+    /**
+     * Returns all members sorted by rank
+     *
+     * @returns {{}|*}
+     */
+    getMembers(){
+        return sort.object(this.members, 'rank', 'desc');
     }
 }
 

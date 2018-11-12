@@ -8,7 +8,7 @@ class LeaderboardsCommand extends BaseCommand{
 
         // Set command name & description
         this.name = 'Leaderboards';
-        this.description = 'Shows a leaderboard with the lowest ranking users on this server';
+        this.description = 'Shows a leaderboard with the lowest ranking members on this server';
     }
 }
 

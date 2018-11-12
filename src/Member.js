@@ -12,11 +12,11 @@ class Member{
         this.id = member.user.id;
         this.name = member.nickname;
         this.battletag = (this.name && /(.{1,12}#[0-9]{1,10})\w+/g.test(this.name)) ? this.name : null;
-        this.hasBattletag() && (new Playoverwatch(this.getUrlName())).getRanking().then((rank) => { this.rank = rank });
     }
 
     /**
      * Get Name
+     *
      * @returns {*}
      */
     getName(){
@@ -25,6 +25,7 @@ class Member{
 
     /**
      * Get URL formatted name
+     *
      * @returns {string}
      */
     getUrlName(){
@@ -37,6 +38,15 @@ class Member{
      */
     hasBattletag(){
         return !!(this.battletag);
+    }
+
+    /**
+     * Initialize the rank property
+     *
+     * @returns {Promise<void>}
+     */
+    async initializeRank(){
+        return this.rank = await new Playoverwatch(this.getUrlName()).getRanking();
     }
 
     /**
